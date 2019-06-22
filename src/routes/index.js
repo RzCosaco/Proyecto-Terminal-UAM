@@ -157,7 +157,7 @@ router.get('/repVel/:city', async (req, res) => {
         } if (req.query.g1t === 'alertasMun') {
             var check = [];
             var flag = parray[0][0].substr(0, 10);
-            for (var i = 0; i < 1; i++) {
+            for (var i = 0; i < parray.length; i++) {
                 if (flag !== parray[i][0].substr(0, 10)) {
                     check = [];
                     flag = parray[i][0].substr(0, 10);
@@ -169,15 +169,13 @@ router.get('/repVel/:city', async (req, res) => {
                     { $project: { "alerts": { $filter: { input: "$alerts", as: "alert", cond: { $eq: ["$$alert.type", "POLICE"] } } } } },
                     { $project: { "alerts.uuid": 1, "alerts.location": 1, _id: 0 } },
                     { $unwind: "$alerts" },
-                    { $group: { _id: { "uuid": "$alerts.uuid" }, "unique": { $addToSet: "$alerts.location" } } },
-                    { $project: { "total": { $size: "$unique" } } }
+                    { $group: { _id: { "uuid": "$alerts.uuid" }, "unique": { $addToSet: "$alerts.location" }, "count": { "$sum": 1 } } },
+                    { $match: { count: { $gt: 0 } } },
+                    { $count: "count" }
                 ]).
                     exec(function (err, response) {
                         if (err) return handleError(err);
-                        rs._read = function () {
-                            rs.push(response.toString());
-                        };
-                        rs.pipe(res);
+                        console.log(response);
                     });
                 //var auxj = await model.find({ 'startTime': { $regex: parray[i][0] } }, {'alerts.uuid':1,'alerts.type':1,'alerts.location':1}).lean();
                 console.log('Salgo del Query');
@@ -207,7 +205,7 @@ router.get('/repVel/:city', async (req, res) => {
             var repwaze = combine(result);
             console.log(repwaze);
             res.send('Recibido');*/
-            //res.send('Recibido');
+            res.send('Recibido');
         }
     } else {
         const shr = req.query.stime;
