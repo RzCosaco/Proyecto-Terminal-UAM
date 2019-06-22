@@ -1,0 +1,113 @@
+<head>
+  <title>Búsqueda de Mapas</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../resources/view/style/table.css" />
+  <!-- PAGE settings -->
+  <link rel="icon" href="https://templates.pingendo.com/assets/Pingendo_favicon.ico">
+  <!-- CSS dependencies -->
+  <link rel="stylesheet" href="../resources/view/style/elegant.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    type="text/css">
+  <!-- Script: Make my navbar transparent when the document is scrolled to top -->
+  <script src="../resources/view/js/navbar-ontop.js"></script>
+  <!-- Script: Animated entrance -->
+  <script src="../resources/view/js/animate-in.js"></script>
+  <!-- JQuery & Ajax -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://apis.google.com/js/client.js?onload=function"></script>
+</head>
+
+<body class="text-center">
+  <script>
+    $(document).ready(function () {
+      function carga() {
+        var today = new Date();
+        var date = today.getFullYear() + '-' + (addZ(today.getMonth() + 1)) + '-' + addZ(today.getDate());
+        $('#inputdatemap').attr("max", date);
+        <% if (typeof tdate !== 'undefined') { %>
+          var result = <%- JSON.stringify(tdate) %>;
+          var city = <%- JSON.stringify(jcity) %>;
+          $('#tabladate').empty();
+          for (var i = 0; i < result.length; i++) {
+            $("#tabladate").append($("<tr><th scope='row'>" + (i + 1) + "</th><td>" + result[i].startTime.substring(0, 16) + "</td><td><a href='/clustered/" + city.city + "&" + result[i]._id + "'>Clustered</a></td><td><a href='/masked/" + city.city + "&" + result[i]._id + "'>Masked</a></td></tr>"));
+          }
+        <% } %>
+      }
+      carga();
+      function addZ(n) {
+        return n < 10 ? '0' + n : '' + n;
+      }
+    });
+  </script>
+  <!-- Navbar -->
+  <% include partials/_header %>
+  <div class="py-5 text-center text-white h-100 align-items-center d-flex"
+    style="background-image: linear-gradient(to bottom, rgba(0, 0, 0, .75), rgba(0, 0, 0, .75)), url(https://static.pingendo.com/cover-bubble-dark.svg);  background-position: center center, center center;  background-size: cover, cover;  background-repeat: repeat, repeat;">
+    <div class="container py-5">
+      <div class="row">
+        <div class="text-center mx-auto col-md-12">
+          <a href="/#cities" class="btn btn-lg btn-primary mx-1">Regresar a Ciudades<br></a> <a
+            class="btn btn-lg mx-1 btn-outline-light" href="/busqueda/<%= jcity.city %>">Regresar a Búsqueda<br></a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <br>
+          <div class="card text-center">
+            <div class="card-header">Mapa</div>
+            <div class="card-body">
+              <h5 class="card-title">Ingrese Fecha</h5>
+              <form id="c_form-h" class="" action="/searchDate/<%= jcity.city %>" method="GET">
+                <div class="form-group row"> <label class="col-2 col-form-label">Date Start</label>
+                  <div class="col-10">
+                    <input type="date" name="date" class="form-control" id="inputdatemap" max="" min="2019-01-01"
+                      required> </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+            <div class="card-footer text-muted">Dato necesario para continuar</div>
+          </div>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <div class="card text-center">
+            <div class="card-body">
+              <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+                <table class="table table-striped table-borderless">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Fecha/Hora</th>
+                      <th scope="col">Clustered</th>
+                      <th scope="col">Masked</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabladate">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+    </div>
+  </div>
+  <% include partials/_footer %>
+  <!-- JavaScript dependencies -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+  <!-- Script: Smooth scrolling between anchors in a same page -->
+  <script src="../resources/view/js/smooth-scroll.js"></script>
+</body>

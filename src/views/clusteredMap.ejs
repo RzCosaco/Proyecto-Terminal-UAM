@@ -1,0 +1,104 @@
+<head>
+    <title>Mapa Datos Agrupados</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Clustered Map -->
+    <link rel="stylesheet" href="../resources/view/style/screen.css" />
+    <link rel="stylesheet" href="../resources/clusteredMap/MarkerCluster.css" />
+    <link rel="stylesheet" href="../resources/clusteredMap/MarkerCluster.Default.css" />
+    <script type="text/javascript" src="../resources/view/style/mapStyle.js"></script>
+    <script type="text/javascript" src="../resources/states.js"></script>
+    <!-- Leaflet-->
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js"
+        integrity="sha512-WXoSHqw/t26DszhdMhOXOkI7qCiv5QWXhH9R7CgvgZMHz1ImlkVQ3uNsiQKu5wwbbxtPzFXd1hK4tzno2VqhpA=="
+        crossorigin=""></script>
+    <script src="../resources/clusteredMap/leaflet.markercluster-src.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
+        integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ=="
+        crossorigin="" />
+    <% include partials/_headRes %>
+</head>
+
+<body class="text-center">
+    <!-- Navbar -->
+    <% include partials/_header %>
+    <!-- Sponsor logos -->
+    <div class="pb-5">
+        <div class="container py-5">
+            <div class="row">
+                <div class="mx-auto col-lg-8 col-md-10">
+                    <h1 class="display-4 mb-4" contenteditable="true">Mapa con Datos Agrupados</h1>
+                    <h1 class="display-5 mb-4" contenteditable="true" id="date"></h1>
+                    <a href="/#cities" class="btn btn-lg btn-primary mx-1">Regresar a Ciudades<br></a> <a
+                        class="btn btn-lg mx-1 btn-outline-light" href="/searchMaps/<%= jcity.city %>">Regresar a
+                        Búsqueda<br></a>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid p-0">
+            <div id="map" width="100%" height="100%" scrolling="no" frameborder="0"></div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <% include partials/_footer %>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var ciudad = <%- JSON.stringify(jcity) %>;
+            var cntr = centro(ciudad.city.toString());
+            var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Points &copy 2012 LINZ'
+            }),
+                latlng = L.latLng(19.32, -99.15);
+
+            var map = L.map('map', { center: cntr, zoom: 10, layers: [tiles] });
+
+            var markers = L.markerClusterGroup({ chunkedLoading: true });
+
+            var markerList = [];
+
+            var data = [];
+
+            var result = <%- JSON.stringify(arrwaze) %>;
+            $('#date').text(result.startTime.substring(0, 16));
+            for (var i = 0; i < result.jams.length; i++) {
+                var trafico = result.jams[i];
+                var linea = trafico.line;
+                for (var j = 0; j < linea.length; j++) {
+                    var coord = linea[j];
+                    var vel = trafico.speedKMH.toString();
+                    var mark = L.marker(L.latLng(coord.y, coord.x), { vel: vel });
+                    mark.bindPopup('<strong>Speed KMH</strong><br>' + vel);
+                    markerList.push(mark);
+                }
+            }
+            markers.addLayers(markerList);
+            map.addLayer(markers);
+            //var geojson2 = L.geoJson(insideCdmx, { style: style }).addTo(map);
+            var geojson = L.geoJson(statesData, { style: style2 }).addTo(map);
+            function centro(string) {
+            	 switch (string) {
+                                case 'abudhabi':
+                                        return new L.LatLng(24.40, 54.54);
+                                        break;
+                                case 'brasilia':
+                                        return new L.LatLng(-15.72,-47.99);
+                                        break;
+                                case'cdmx':
+                                        return new L.LatLng(19.32, -99.15);
+                                        break;
+                                case 'lacountry':
+                                        return new L.LatLng(34.31,-118.21);
+                                        break;
+                                case 'madrid':
+                                        return new L.LatLng(40.42,-3.703);
+                                        break;
+                                case 'paris':
+                                        return new L.LatLng(48.85, 2.35);
+                                        break;
+                }
+	    };
+        });
+    </script>
+    <% include partials/_footRes %>
+</body>

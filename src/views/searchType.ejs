@@ -1,0 +1,51 @@
+<head>
+  <title>Busqueda</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <% include partials/_headRes %>
+</head>
+
+<body class="text-center">
+  <% include partials/_header %>
+  <div class="py-5 text-center align-items-center d-flex"
+    style="background-image: linear-gradient(to left bottom, rgba(189, 195, 199, .75), rgba(44, 62, 80, .75)); background-size: 100%;">
+    <div class="container py-5">
+      <div class="row">
+        <div class="col-md-12">
+          <h1 class="display-3">Seleccione una Opción</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card text-center">
+            <div class="card-body">
+              <h5 class="card-title">Graficar datos</h5>
+              <p class="card-text">Gráfica de datos de velocidad y número de reportes de tráfico de la ciudad
+                seleccionada</p>
+              <a href="/searchRepVel/<%= jcity.city %>"" class="btn btn-primary">Graficas</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card text-center">
+            <div class="card-body">
+              <h5 class="card-title">Mapas de Datos</h5>
+              <p class="card-text">Mapas de alertas y de velocidad de tráfico usando reportes de la ciudad seleccionada</p>
+              <a href="/searchMaps/<%= jcity.city %>"" class="btn btn-primary">Mapas</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6"><img class="img-fluid d-block rounded"
+            src="../resources/view/assets/types/gra.PNG"></div><!--rounded-circle -->
+        <div class="col-md-6"><img class="img-fluid d-block rounded"
+            src="../resources/view/assets/types/mps.png"></div>
+      </div>
+    </div>
+  </div>
+  <!-- Footer -->
+  <% include partials/_footer %>
+  <!-- JavaScript dependencies -->
+  <% include partials/_footRes %>
+</body>
