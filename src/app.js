@@ -33,3 +33,4 @@ const io = socketIO(server);
 require('./sockets/sockets')(io);
 app.use('/',indexRoutes);
 app.use("/resources", express.static(__dirname + '/resources'));
+app.use("/views/javascript_ejs", express.static(__dirname + '/views/javascript_ejs'));

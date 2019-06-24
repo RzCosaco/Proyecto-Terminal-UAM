@@ -16,6 +16,7 @@
 			<div class="row">
 				<div class="text-center mx-auto col-md-12">
 					<h1>Graficar datos<br></h1>
+					<p hidden value="" id="hp"></p>
 					<a href="/#cities" class="btn btn-lg btn-primary mx-1">Regresar a Ciudades<br></a> <a
                     class="btn btn-lg mx-1 btn-outline-light" href="/busqueda/<%= jcity.city %>">Regresar a Búsqueda<br></a>
 				</div>
@@ -28,7 +29,7 @@
 			</div>
 			<div class="row">
 				<div class="col-md-12">
-					<form id="go" action="/repVel/<%= jcity.city %>" method="GET">
+					<form>
 						<div class="row">
 							<div class="col-3">
 								<ul class="nav nav-pills flex-column">
@@ -210,22 +211,39 @@
 												data-toggle="buttons">
 												<label class="btn btn-primary active">
 													<input type="radio" name="g1t" autocomplete="off" checked=""
-														value="speed">&nbsp; &nbsp; &nbsp;
-													Velocidad&nbsp; &nbsp; &nbsp;</label>
+														value="speed">Velocidad</label>
 												<label class="btn btn-primary">
 													<input type="radio" name="g1t" autocomplete="off"
-														value="report">Número de Reportes</label>
+														value="report">Reportes</label>
+												<label class="btn btn-primary">
+													<input type="radio" name="g1t" autocomplete="off"
+														value="JAM">Trafico</label>
+												<label class="btn btn-primary">
+													<input type="radio" name="g1t" autocomplete="off"
+														value="POLICE">Policia</label>
+												<label class="btn btn-primary">
+													<input type="radio" name="g1t" autocomplete="off"
+														value="CHIT_CHAT">Chit-Chat</label>
+												<label class="btn btn-primary">
+													<input type="radio" name="g1t" autocomplete="off"
+														value="HAZARD">Obstaculo</label>
+												<label class="btn btn-primary">
+													<input type="radio" name="g1t" autocomplete="off"
+														value="ROAD_CLOSED">Camino Cerrado</label>
+												<label class="btn btn-primary">
+													<input type="radio" name="g1t" autocomplete="off"
+														value="ACCIDENT">Accidente</label>
 											</div>
 										</fieldset>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="row">
-							<div class="col-md-12 my-2"><button id="btn" class="btn btn-secondary">Enviar Consulta</button>
-							</div>
-						</div>
 					</form>
+					<div class="row">
+						<div class="col-md-12 my-2"><button id="btn" class="btn btn-secondary">Enviar Consulta</button>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -235,11 +253,15 @@
 	</div>
 	<!-- Footer -->
 	<% include partials/_footer %>
+	
 	<script src="/socket.io/socket.io.js"></script>
+	<script src="../views/javascript_ejs/bundle.js"></script>
 	<script>
 
 	$(document).ready(function () {
-		<% include browserfly/moments.js %>
+		var ciudad = <%- JSON.stringify(jcity) %>;
+		$('#hp').val(ciudad.city);
+				
 		var days = [];
 		var datos = [];
 		var lbl = '';
@@ -273,141 +295,9 @@
 			}
 		<% } %>
 
-		var ctx = document.getElementById('myChart').getContext('2d');
-		var myChart = new Chart(ctx, {
-		type: 'bar',
-			data: {
-				labels: days,
-				datasets: [{
-					label: lbl,
-					data: datos,
-					backgroundColor: [
-						'rgba(255, 99, 132, 0.6)',
-						'rgba(54, 162, 235, 0.6)',
-						'rgba(255, 206, 86, 0.6)',
-						'rgba(75, 192, 192, 0.6)',
-						'rgba(153, 102, 255, 0.6)',
-						'rgba(255, 159, 64, 0.6)',
-						'rgba(255, 153, 206, 0.6)'
-					],
-					borderColor: [
-						'rgba(255, 99, 132, 1)',
-						'rgba(54, 162, 235, 1)',
-						'rgba(255, 206, 86, 1)',
-						'rgba(75, 192, 192, 1)',
-						'rgba(153, 102, 255, 1)',
-						'rgba(255, 159, 64, 1)',
-						'rgba(255, 204, 230, 1)'
-					],
-					borderWidth: 1
-				}]
-			},
-			options: {
-				legend: {
-					labels: {
-						fontColor: "white",
-						fontSize: 18
-					}
-				},
-				scales: {
-					yAxes: [{
-						ticks: {
-							fontColor: "white",
-							beginAtZero: true
-						}
-					}],
-					xAxes: [{
-						ticks: {
-							fontColor: "white",
-							beginAtZero: true
-						}
-					}]
-				}
-			}
-		});
-		function formatoDia(integer) {
-			switch (integer) {
-				case 1:
-					return "Lunes";
-					break;
-				case 2:
-					return "Martes";
-					break;
-				case 3:
-					return "Miercoles";
-					break;
-				case 4:
-					return "Jueves";
-					break;
-				case 5:
-					return "Viernes";
-					break;
-				case 6:
-					return "Sabado";
-					break;
-				case 0:
-					return "Domingo";
-				default:
-					return integer;
-			}
-		};
-		var today = new Date();
-		var date = today.getFullYear()+'-'+(addZ(today.getMonth()+1))+'-'+addZ(today.getDate());
-		$('#sdate').attr("max",date);
-
-		if($('#edate').val() && $('#sdate').val()){
-			$("#edate").prop('disabled', false);
-			$('#edate').attr("min",$('#sdate').val());
-			$('#edate').attr("max",date);
-		}
-		if($('#sdate').val() && !$('#edate').val()){
-			$("#edate").prop('disabled', false);
-			$('#edate').attr("min",$('#sdate').val());
-			$('#edate').attr("max",date);
-		}
-
-		if($('#etime').val() && $('#stime').val()){
-			$('#etime').val('');
-			var timecheck= $('#stime').val();
-			var timesubs = parseInt(timecheck.substr(0,2));
-			for (let i = timesubs; i < 24; i++) {
-				$('#e'+i).prop('disabled', false);
-			}
-		}
-
-		if($('#stime').val() && !$('#etime').val()){
-			$('#etime').val('');
-			var timecheck= $('#stime').val();
-			var timesubs = parseInt(timecheck.substr(0,2));
-			for (let i = timesubs; i < 24; i++) {
-				$('#e'+i).prop('disabled', false);
-			}
-		}
-
-		$('#stime').on('change',function(ready) {
-			$('#etime').val('');
-			for (let j = 0; j < 24; j++) {
-				$('#e'+j).prop('disabled', true);
-			}
-			var timecheck= $('#stime').val();
-			var timesubs = parseInt(timecheck.substr(0,2));
-			for (let i = timesubs; i < 24; i++) {
-				$('#e'+i).prop('disabled', false);
-			}
-		});
-
-		$('#sdate').on('change',function() {
-			if($('#sdate').val().length > 9 ){
-				$('#edate').prop('disabled', false);
-				$('#edate').attr("min",$('#sdate').val());
-				$('#edate').attr("max",date);
-			}else{
-				$('#edate').prop('disabled', true);
-			}
-		});
-		function addZ(n) {
-       		return n < 10 ? '0' + n : '' + n;
-      	}
+		<% include javascript_ejs/plot_charting.js %>
+		<% include javascript_ejs/plot_dayFormat.js %>
+		<% include javascript_ejs/plot_validate.js %>
 	});
 	</script>
 	<% include partials/_footRes %>
