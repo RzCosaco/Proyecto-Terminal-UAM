@@ -3,7 +3,9 @@ module.exports = io => {
         //console.log('new user connected');
         socket.on('ploting', async (data,city,type) => {
             const model = require('../models/' + city);
+            var alertas = ["POLICE","HAZARD","JAM","CHIT-CHAT","ACCIDENT","ROAD_CLOSED"];
             console.log(type);
+            if(alertas.includes(type)){
             for (let i = 0; i < data.length; i++) {
                 var re = new RegExp(data[i][0].join("|"));
                 model.aggregate([
@@ -21,6 +23,7 @@ module.exports = io => {
                         io.to(socket.id).emit('ploting', response);
                     });
             }
+        }
         });
     });
 }
