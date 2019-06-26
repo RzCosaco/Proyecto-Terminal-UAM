@@ -28,7 +28,7 @@ const server = app.listen(app.get('port'),() => {
 });
 
 //webSockets
-const io = socketIO(server);
+const io = socketIO(server, { pingTimeout: 300000 });
 //routes
 require('./sockets/sockets')(io);
 app.use('/',indexRoutes);
