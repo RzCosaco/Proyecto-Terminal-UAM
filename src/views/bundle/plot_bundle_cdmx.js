@@ -4,9 +4,9 @@ const MomentRange = require('moment-range');
 const moment = MomentRange.extendMoment(Moment);
 module.exports = moment; 
 },{"moment":"moment","moment-range":"moment-range"}],2:[function(require,module,exports){
-var lbls = [];
-var chartDatos = [];
-var lbl = '';
+let lbls = [];
+let chartDatos = [];
+let lbl = '';
 function draw(lbls, chartDatos, lbl) {
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
@@ -16,8 +16,8 @@ function draw(lbls, chartDatos, lbl) {
             datasets: [{
                 label: lbl,
                 data: chartDatos,
-                backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: [],
+                borderColor: 'rgb(0, 0, 0)',
                 borderWidth: 1
             }]
         },
@@ -47,18 +47,27 @@ function draw(lbls, chartDatos, lbl) {
     return myChart;
 }
 
-var myChart = draw(lbls, chartDatos, lbl);
+function getRandomColor() {
+    let letters = '0123456789ABCDEF'.split('');
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+let myChart = draw(lbls, chartDatos, lbl);
 
 $('#btn').click(function () {
     if ($('#sdate').val() && $('#edate').val() && $('#stime').val() && $('#etime').val()) {
         const socket = io();
-        var lbls = [];
-        var chartDatos = [];
-        var lbl = '';
+        lbls = [];
+        chartDatos = [];
+        lbl = '';
         myChart.destroy();
         myChart = draw(lbls, chartDatos, lbl);
         $("#btn").attr("disabled", true);
-        var moment = require('../browserify/plot_moment.js');
+        const moment = require('../browserify/plot_moment.js');
         const g1d = $("input[name='g1d']:checked").val();
         const g2d = $("input[name='g2d']:checked").val();
         const g3d = $("input[name='g3d']:checked").val();
@@ -80,13 +89,13 @@ $('#btn').click(function () {
         start.subtract(1, 'days');
         end.add(1, 'days');
         const days = [];
-        for (var i = 0; i < 7; i++) {
+        for (let i = 0; i < 7; i++) {
             const string = validDays[i];
             if (string !== '') {
                 days.push(parseInt(string));
             }
         }
-        for (var i = 0; i < days.length; i++) {
+        for (let i = 0; i < days.length; i++) {
             var stmp = start.clone().day(days[i]);
             if (stmp.isAfter(start, 'd') && stmp.isBefore(end, 'd')) {
                 darray.push([stmp.clone().format('YYYY-MM-DD'), days[i]]);
@@ -110,18 +119,21 @@ $('#btn').click(function () {
         }
         if ((parray.length === 1 || days.length === 1) && g2t === 'day') {
             lbls = ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"];
-            var numDias = 0;
+            for (let i = 0; i < lbls.length; i++) {
+                myChart.data.datasets[0].backgroundColor.push(getRandomColor());
+            }
+            let numDias = 0;
             parray.forEach(element => {
                 numDias += element[0].length;
             });
-            var cont = 0;
-            var cuantos = [];
-            var total = [];
+            let cont = 0;
+            let cuantos = [];
+            let total = [];
             cuantos = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
             total = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
             myChart.data.labels = lbls;
             myChart.data.datasets[0].label = ("Promedio de " + g1t + " del " + sdate + " al " + edate + " de " + stime + "hrs a las " + etime + "hrs");
-            myChart.data.datasets[0].data = total;
+            myChart.data.datasets[0].data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
             myChart.update();
             socket.emit('ploting_oneDay', parray, ci, g1t)
             socket.on("disconnect", (reason) => {
@@ -259,15 +271,18 @@ $('#btn').click(function () {
         }
         else {
             if (g2t === 'day') {
-                var cont = 0;
-                var cuantos = [];
-                var total = [];
+                let cont = 0;
+                let cuantos = [];
+                let total = [];
                 cuantos = [0, 0, 0, 0, 0, 0, 0];
                 total = [0, 0, 0, 0, 0, 0, 0];
                 lbls = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
+                for (let i = 0; i < lbls.length; i++) {
+                    myChart.data.datasets[0].backgroundColor.push(getRandomColor());
+                }
                 myChart.data.labels = lbls;
                 myChart.data.datasets[0].label = ("Promedio de " + g1t + " del " + sdate + " al " + edate + " de " + stime + "hrs a las " + etime + "hrs");
-                myChart.data.datasets[0].data = total;
+                myChart.data.datasets[0].data = [0, 0, 0, 0, 0, 0, 0];
                 myChart.update();
                 socket.emit('ploting_day', parray, ci, g1t)
                 socket.on("disconnect", (reason) => {
@@ -335,14 +350,17 @@ $('#btn').click(function () {
                     "Tlalpan",
                     "Venustiano Carranza",
                     "Xochimilco"];
-                var cont = 0;
+                for (let i = 0; i < lbls.length; i++) {
+                    myChart.data.datasets[0].backgroundColor.push(getRandomColor());
+                }
+                let cont = 0;
                 //var count = [];
-                var total = [];
+                let total = [];
                 count = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
                 total = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
                 myChart.data.labels = lbls;
                 myChart.data.datasets[0].label = ("Promedio de " + g1t + " del " + sdate + " al " + edate + " de " + stime + "hrs a las " + etime + "hrs");
-                myChart.data.datasets[0].data = total;
+                myChart.data.datasets[0].data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
                 myChart.update();
                 socket.emit('ploting_mun', parray, ci, g1t)
                 socket.on("disconnect", (reason) => {
@@ -353,84 +371,84 @@ $('#btn').click(function () {
                     for (x in resjson) {
                         switch (x) {
                             case "Alvaro Obregon":
-                                //count[0] = count[0] + 1;
+                                count[0] = count[0] + 1;
                                 total[0] = total[0] + resjson[x];
-                                myChart.data.datasets[0].data[0] = total[0] / parray.length;
+                                myChart.data.datasets[0].data[0] = total[0] / count[0];
                                 break;
                             case "Azcapotzalco":
-                                //count[1] = count[1] + 1;
+                                count[1] = count[1] + 1;
                                 total[1] = total[1] + resjson[x];
-                                myChart.data.datasets[0].data[1] = total[1] / parray.length;
+                                myChart.data.datasets[0].data[1] = total[1] / count[1];
                                 break;
                             case "Benito Juárez":
-                                //count[2] = count[2] + 1;
+                                count[2] = count[2] + 1;
                                 total[2] = total[2] + resjson[x];
-                                myChart.data.datasets[0].data[2] = total[2] / parray.length;
+                                myChart.data.datasets[0].data[2] = total[2] / count[2];
                                 break;
                             case "Coyoacan":
-                                //count[3] = count[3] + 1;
+                                count[3] = count[3] + 1;
                                 total[3] = total[3] + resjson[x];
-                                myChart.data.datasets[0].data[3] = total[3] / parray.length;
+                                myChart.data.datasets[0].data[3] = total[3] / count[3];
                                 break;
                             case "Cuajimalpa":
-                                //count[4] = count[4] + 1;
+                                count[4] = count[4] + 1;
                                 total[4] = total[4] + resjson[x];
-                                myChart.data.datasets[0].data[4] = total[4] /parray.length;
+                                myChart.data.datasets[0].data[4] = total[4] / count[4];
                                 break;
                             case "Cuauhtemoc":
-                                //count[5] = count[5] + 1;
+                                count[5] = count[5] + 1;
                                 total[5] = total[5] + resjson[x];
-                                myChart.data.datasets[0].data[5] = total[5] /parray.length;
+                                myChart.data.datasets[0].data[5] = total[5] / count[5];
                                 break;
                             case "Gustavo A. Madero":
-                                //count[6] = count[6] + 1;
+                                count[6] = count[6] + 1;
                                 total[6] = total[6] + resjson[x];
-                                myChart.data.datasets[0].data[6] = total[6] /parray.length;
+                                myChart.data.datasets[0].data[6] = total[6] / count[6];
                                 break;
                             case "Iztacalco":
-                                //count[7] = count[7] + 1;
+                                count[7] = count[7] + 1;
                                 total[7] = total[7] + resjson[x];
-                                myChart.data.datasets[0].data[7] = total[7] /parray.length;
+                                myChart.data.datasets[0].data[7] = total[7] / count[7];
                                 break;
                             case "Iztapalapa":
-                                //count[8] = count[8] + 1;
+                                count[8] = count[8] + 1;
                                 total[8] = total[8] + resjson[x];
-                                myChart.data.datasets[0].data[8] = total[8] /parray.length;
+                                myChart.data.datasets[0].data[8] = total[8] / count[8];
                                 break;
                             case "La Magdalena Contreras":
-                                //count[9] = count[9] + 1;
+                                count[9] = count[9] + 1;
                                 total[9] = total[9] + resjson[x];
-                                myChart.data.datasets[0].data[9] = total[9] /parray.length;
+                                myChart.data.datasets[0].data[9] = total[9] / count[9];
                                 break;
                             case "Miguel Hidalgo":
-                                //count[10] = count[10] + 1;
+                                count[10] = count[10] + 1;
                                 total[10] = total[10] + resjson[x];
-                                myChart.data.datasets[0].data[10] = total[10] / parray.length;
+                                myChart.data.datasets[0].data[10] = total[10] / count[10];
                                 break;
                             case "Milpa Alta":
-                                //count[11] = count[11] + 1;
+                                count[11] = count[11] + 1;
                                 total[11] = total[11] + resjson[x];
-                                myChart.data.datasets[0].data[11] = total[11] / parray.length;
+                                myChart.data.datasets[0].data[11] = total[11] / count[11];
                                 break;
                             case "Tlahuac":
-                                //count[12] = count[12] + 1;
+                                count[12] = count[12] + 1;
                                 total[12] = total[12] + resjson[x];
-                                myChart.data.datasets[0].data[12] = total[12] / parray.length;
+                                myChart.data.datasets[0].data[12] = total[12] / count[12];
                                 break;
                             case "Tlalpan":
-                                //count[13] = count[13] + 1;
+                                count[13] = count[13] + 1;
                                 total[13] = total[13] + resjson[x];
-                                myChart.data.datasets[0].data[13] = total[13] / parray.length;
+                                myChart.data.datasets[0].data[13] = total[13] / count[13];
                                 break;
                             case "Venustiano Carranza":
-                                //count[14] = count[14] + 1;
+                                count[14] = count[14] + 1;
                                 total[14] = total[14] + resjson[x];
-                                myChart.data.datasets[0].data[14] = total[14] / parray.length;
+                                myChart.data.datasets[0].data[14] = total[14] / count[14];
                                 break;
                             case "Xochimilco":
-                                //count[15] = count[15] + 1;
+                                count[15] = count[15] + 1;
                                 total[15] = total[15] + resjson[x];
-                                myChart.data.datasets[0].data[15] = total[15] / parray.length;
+                                myChart.data.datasets[0].data[15] = total[15] / count[15];
                                 break;
                         }
                     }

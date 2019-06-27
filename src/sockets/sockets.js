@@ -2,12 +2,12 @@ module.exports = io => {
     io.on('connection', socket => {
         socket.on('ploting_mun', async (data, city, type) => {
             const model = require('../models/' + city);
-            let datos = require('../resources/json/alcaldias.json');
+            const datos = require('../resources/json/alcaldias.json');
             const ray = require('../resources/functions/rayCasting.js');
-            var alertas = ["POLICE", "HAZARD", "JAM", "CHIT_CHAT", "ACCIDENT", "ROAD_CLOSED"];
+            const alertas = ["POLICE", "HAZARD", "JAM", "CHIT_CHAT", "ACCIDENT", "ROAD_CLOSED"];
             if (alertas.includes(type)) {
                 for (let i = 0; i < data.length; i++) {
-                    var re = new RegExp(data[i][0].join("|"));
+                    let re = new RegExp(data[i][0].join("|"));
                     await model.aggregate([
                         { $match: { "startTime": { $regex: re }, "alerts.type": type } },
                         { $project: { "alerts": { $filter: { input: "$alerts", as: "alert", cond: { $eq: ["$$alert.type", type] } } } } },
@@ -19,7 +19,7 @@ module.exports = io => {
                         exec(function (err, response) {
                             if (err) return handleError(err);
                             if (response.length > 0) {
-                                var resjson = {
+                                let resjson = {
                                     "Alvaro Obregon": 0,
                                     "Azcapotzalco": 0,
                                     "Benito Juárez": 0,
@@ -39,7 +39,7 @@ module.exports = io => {
                                 }
                                 datos.alcaldias.forEach(alcaldia => {
                                     response.forEach(element => {
-                                        var check = [element.c[0].x, element.c[0].y]
+                                        let check = [element.c[0].x, element.c[0].y]
                                         if (ray.contains(alcaldia.coordinates, check)) {
                                             resjson[alcaldia.name] = resjson[alcaldia.name] + 1;
                                         }
@@ -53,10 +53,10 @@ module.exports = io => {
         });
         socket.on('ploting_day', async (data, city, type) => {
             const model = require('../models/' + city);
-            var alertas = ["POLICE", "HAZARD", "JAM", "CHIT_CHAT", "ACCIDENT", "ROAD_CLOSED"];
+            const alertas = ["POLICE", "HAZARD", "JAM", "CHIT_CHAT", "ACCIDENT", "ROAD_CLOSED"];
             if (alertas.includes(type)) {
                 for (let i = 0; i < data.length; i++) {
-                    var re = new RegExp(data[i][0].join("|"));
+                    let re = new RegExp(data[i][0].join("|"));
                     await model.aggregate([
                         { $match: { "startTime": { $regex: re }, "alerts.type": type } },
                         { $project: { "alerts": { $filter: { input: "$alerts", as: "alert", cond: { $eq: ["$$alert.type", type] } } } } },
@@ -68,7 +68,7 @@ module.exports = io => {
                     ]).
                         exec(function (err, response) {
                             if (err) return handleError(err);
-                            var json = { "day": data[i][1] }
+                            let json = { "day": data[i][1] }
                             response.push(json);
                             socket.emit('ploting_day', response);
                         });
@@ -77,7 +77,7 @@ module.exports = io => {
         });
         socket.on('ploting_oneDay', async (data, city, type) => {
             const model = require('../models/' + city);
-            var alertas = ["POLICE", "HAZARD", "JAM", "CHIT_CHAT", "ACCIDENT", "ROAD_CLOSED"];
+            const alertas = ["POLICE", "HAZARD", "JAM", "CHIT_CHAT", "ACCIDENT", "ROAD_CLOSED"];
             if (alertas.includes(type)) {
                 for (let i = 0; i < data.length; i++) {
                     data[i][0].forEach(element => {
@@ -92,8 +92,8 @@ module.exports = io => {
                         ]).
                             exec(function (err, response) {
                                 if (err) return handleError(err);
-                                    var hrjson = { "hr":  element.substr(-2) + ':00'}
-                                    var dayjson = {"day": element.substr(0,10)}
+                                    let hrjson = { "hr":  element.substr(-2) + ':00'}
+                                    let dayjson = {"day": element.substr(0,10)}
                                     response.push(hrjson,dayjson);
                                     socket.emit('ploting_oneDay', response);
                             });

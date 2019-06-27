@@ -1,6 +1,6 @@
-var lbls = [];
-var chartDatos = [];
-var lbl = '';
+let lbls = [];
+let chartDatos = [];
+let lbl = '';
 function draw(lbls, chartDatos, lbl) {
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
@@ -10,8 +10,8 @@ function draw(lbls, chartDatos, lbl) {
             datasets: [{
                 label: lbl,
                 data: chartDatos,
-                backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: [],
+                borderColor: 'rgb(0, 0, 0)',
                 borderWidth: 1
             }]
         },
@@ -41,18 +41,27 @@ function draw(lbls, chartDatos, lbl) {
     return myChart;
 }
 
-var myChart = draw(lbls, chartDatos, lbl);
+function getRandomColor() {
+    let letters = '0123456789ABCDEF'.split('');
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+let myChart = draw(lbls, chartDatos, lbl);
 
 $('#btn').click(function () {
     if ($('#sdate').val() && $('#edate').val() && $('#stime').val() && $('#etime').val()) {
         const socket = io();
-        var lbls = [];
-        var chartDatos = [];
-        var lbl = '';
+        lbls = [];
+        chartDatos = [];
+        lbl = '';
         myChart.destroy();
         myChart = draw(lbls, chartDatos, lbl);
         $("#btn").attr("disabled", true);
-        var moment = require('../browserify/plot_moment.js');
+        const moment = require('../browserify/plot_moment.js');
         const g1d = $("input[name='g1d']:checked").val();
         const g2d = $("input[name='g2d']:checked").val();
         const g3d = $("input[name='g3d']:checked").val();
@@ -74,13 +83,13 @@ $('#btn').click(function () {
         start.subtract(1, 'days');
         end.add(1, 'days');
         const days = [];
-        for (var i = 0; i < 7; i++) {
+        for (let i = 0; i < 7; i++) {
             const string = validDays[i];
             if (string !== '') {
                 days.push(parseInt(string));
             }
         }
-        for (var i = 0; i < days.length; i++) {
+        for (let i = 0; i < days.length; i++) {
             var stmp = start.clone().day(days[i]);
             if (stmp.isAfter(start, 'd') && stmp.isBefore(end, 'd')) {
                 darray.push([stmp.clone().format('YYYY-MM-DD'), days[i]]);
@@ -102,20 +111,23 @@ $('#btn').click(function () {
             }
             parray.push([auxarray, darray[i][1]]);
         }
-        if ((parray.length === 1 || days.length === 1)) {
+        if ((parray.length === 1 || days.length === 1) && g2t === 'day') {
             lbls = ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"];
-            var numDias = 0;
+            for (let i = 0; i < lbls.length; i++) {
+                myChart.data.datasets[0].backgroundColor.push(getRandomColor());
+            }
+            let numDias = 0;
             parray.forEach(element => {
                 numDias += element[0].length;
             });
-            var cont = 0;
-            var cuantos = [];
-            var total = [];
+            let cont = 0;
+            let cuantos = [];
+            let total = [];
             cuantos = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
             total = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
             myChart.data.labels = lbls;
             myChart.data.datasets[0].label = ("Promedio de " + g1t + " del " + sdate + " al " + edate + " de " + stime + "hrs a las " + etime + "hrs");
-            myChart.data.datasets[0].data = total;
+            myChart.data.datasets[0].data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
             myChart.update();
             socket.emit('ploting_oneDay', parray, ci, g1t)
             socket.on("disconnect", (reason) => {
@@ -252,15 +264,18 @@ $('#btn').click(function () {
             });
         }
         else {
-            var cont = 0;
-            var cuantos = [];
-            var total = [];
+            let cont = 0;
+            let cuantos = [];
+            let total = [];
             cuantos = [0, 0, 0, 0, 0, 0, 0];
             total = [0, 0, 0, 0, 0, 0, 0];
             lbls = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
+            for (let i = 0; i < lbls.length; i++) {
+                myChart.data.datasets[0].backgroundColor.push(getRandomColor());
+            }
             myChart.data.labels = lbls;
             myChart.data.datasets[0].label = ("Promedio de " + g1t + " del " + sdate + " al " + edate + " de " + stime + "hrs a las " + etime + "hrs");
-            myChart.data.datasets[0].data = total;
+            myChart.data.datasets[0].data = [0, 0, 0, 0, 0, 0, 0];
             myChart.update();
             socket.emit('ploting_day', parray, ci, g1t)
             socket.on("disconnect", (reason) => {
