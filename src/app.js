@@ -33,4 +33,4 @@ const io = socketIO(server, { pingTimeout: 300000 });
 require('./sockets/sockets')(io);
 app.use('/',indexRoutes);
 app.use("/resources", express.static(__dirname + '/resources'));
-app.use("/views/javascript_ejs", express.static(__dirname + '/views/javascript_ejs'));
+app.use("/views/bundle", express.static(__dirname + '/views/bundle'));

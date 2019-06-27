@@ -241,16 +241,16 @@
 										</div>
 										<div class="row">
 											<div class="col-md-8 my-1">
-											<fieldset id="g2t">
-												<div class="btn-group btn-group-toggle" data-toggle="buttons">
-													<label class="btn btn-primary active">
-														<input type="radio" name="g2t" autocomplete="off" checked=""
-															value="day">Dias</label>
-													<label class="btn btn-primary">
-														<input type="radio" name="g2t" autocomplete="off"
-															value="mun">Municipio</label>
-												</div>
-											</fieldset>
+												<fieldset id="g2t">
+													<div class="btn-group btn-group-toggle" data-toggle="buttons">
+														<label class="btn btn-primary active">
+															<input type="radio" name="g2t" autocomplete="off" checked=""
+																value="day">Dias</label>
+														<label class="btn btn-primary">
+															<input type="radio" name="g2t" autocomplete="off"
+																value="mun">Alcaldias</label>
+													</div>
+												</fieldset>
 											</div>
 										</div>
 									</div>
@@ -273,45 +273,14 @@
 	<% include partials/_footer %>
 
 	<script src="/socket.io/socket.io.js"></script>
-	<script src="../views/javascript_ejs/bundle.js"></script>
+	<script src="../views/bundle/plot_bundle_cdmx.js"></script>
 	<script>
 
 		$(document).ready(function () {
 			var ciudad = <%- JSON.stringify(jcity) %>;
 			$('#hp').val(ciudad.city);
 
-
-		<% if (typeof arrwaze !== 'undefined') { %>
-			var result = <%- JSON.stringify(arrwaze) %>;
-				lbl = 'Velocidad Promedio KMH';
-				for (let i = 0; i < result.length; i++) {
-					days.push(formatoDia(result[i].day));
-					var vel = 0;
-					for (let j = 0; j < result[i].data.length; j++) {
-						var vel = vel + result[i].data[j];
-					}
-					datos.push((vel / result[i].data.length));
-				}
-		<% } %>
-		<% if (typeof repwaze !== 'undefined') { %>
-			var result = <%- JSON.stringify(repwaze) %>;
-				lbl = 'Número de reportes';
-				for (let i = 0; i < result.length; i++) {
-					console.log(result[i].date.length);
-					days.push(formatoDia(result[i].day));
-					var rep = 0;
-					console.log(formatoDia(result[i].day));
-					for (let j = 0; j < result[i].data.length; j++) {
-						//console.log(rep+" + "+result[i].data[j]);
-						var rep = rep + result[i].data[j];
-					}
-					console.log(rep)
-					datos.push((rep / 1));
-				}
-		<% } %>
-
-		<% include javascript_ejs/plot_dayFormat.js %>
-		<% include javascript_ejs/plot_validate.js %>
+			<% include javascript_ejs/plot_validate.js %>
 	});
 	</script>
 	<% include partials/_footRes %>

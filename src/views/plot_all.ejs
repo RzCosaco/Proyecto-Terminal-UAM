@@ -1,0 +1,304 @@
+<head>
+	<title>Ploting</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Char JS-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+	<% include partials/_headRes %>
+</head>
+
+<body class="text-center">
+	<!-- Navbar -->
+	<% include partials/_header %>
+	<!-- Intro -->
+	<div class="py-5" style="">
+		<div class="container">
+			<div class="row">
+				<div class="text-center mx-auto col-md-12">
+					<h1>Graficar datos<br></h1>
+					<p hidden value="" id="hp"></p>
+					<a href="/#cities" class="btn btn-lg btn-primary mx-1">Regresar a Ciudades<br></a> <a
+						class="btn btn-lg mx-1 btn-outline-light" href="/busqueda/<%= jcity.city %>">Regresar a
+						Búsqueda<br></a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<br>
+					<br>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<form>
+						<div class="row">
+							<div class="col-3">
+								<ul class="nav nav-pills flex-column">
+									<li class="nav-item bg-secondary"> <a href="" class="active nav-link"
+											data-toggle="pill" data-target="#tabone">Dias</a> </li>
+									<li class="nav-item bg-secondary"> <a class="nav-link" href="" data-toggle="pill"
+											data-target="#tabtwo">Fecha &amp; Horas</a> </li>
+									<li class="nav-item bg-secondary"> <a href="" class="nav-link" data-toggle="pill"
+											data-target="#tabthree">Tipo de Búsqueda<br></a> </li>
+								</ul>
+							</div>
+							<div class="col-9">
+								<div class="tab-content">
+									<div class="tab-pane fade show active" id="tabone" role="tabpanel">
+										<div class="row">
+											<div class="col-md-4 my-1">
+												<fieldset id="g1d">
+													<div class="btn-group btn-group-toggle" data-toggle="buttons">
+														<label class="btn btn-primary active">
+															<input type="radio" name="g1d" autocomplete="off" checked=""
+																value="1">&nbsp; &nbsp;Lunes&nbsp; &nbsp;</label>
+														<label class="btn btn-primary">
+															<input type="radio" name="g1d" autocomplete="off"
+																value="">Apagado</label>
+													</div>
+												</fieldset>
+											</div>
+											<div class="col-md-4 my-1">
+												<fieldset id="g2d">
+													<div class="btn-group btn-group-toggle" data-toggle="buttons">
+														<label class="btn btn-primary active">
+															<input type="radio" name="g2d" autocomplete="off" checked=""
+																value="2">&nbsp; &nbsp;Martes&nbsp;&nbsp;</label>
+														<label class="btn btn-primary">
+															<input type="radio" name="g2d" autocomplete="off"
+																value="">Apagado</label>
+													</div>
+												</fieldset>
+											</div>
+											<div class="col-md-4 my-1">
+												<fieldset id="g3d">
+													<div class="btn-group btn-group-toggle" data-toggle="buttons">
+														<label class="btn btn-primary active">
+															<input type="radio" name="g3d" autocomplete="off" checked=""
+																value="3">Miercoles</label>
+														<label class="btn btn-primary">
+															<input type="radio" name="g3d" autocomplete="off"
+																value="">Apagado</label>
+													</div>
+												</fieldset>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-4 my-1">
+												<fieldset id="g4d">
+													<div class="btn-group btn-group-toggle" data-toggle="buttons">
+														<label class="btn btn-primary active">
+															<input type="radio" name="g4d" autocomplete="off" checked=""
+																value="4">&nbsp; &nbsp;Jueves&nbsp;&nbsp;</label>
+														<label class="btn btn-primary">
+															<input type="radio" name="g4d" autocomplete="off"
+																value="">Apagado</label>
+													</div>
+												</fieldset>
+											</div>
+											<div class="col-md-4 my-1">
+												<fieldset id="g5d">
+													<div class="btn-group btn-group-toggle" data-toggle="buttons">
+														<label class="btn btn-primary active">
+															<input type="radio" name="g5d" autocomplete="off" checked=""
+																value="5">&nbsp;&nbsp;Viernes&nbsp;&nbsp;</label>
+														<label class="btn btn-primary">
+															<input type="radio" name="g5d" autocomplete="off"
+																value="">Apagado</label>
+													</div>
+												</fieldset>
+											</div>
+											<div class="col-md-4 my-1">
+												<fieldset id="g6d">
+													<div class="btn-group btn-group-toggle" data-toggle="buttons">
+														<label class="btn btn-primary active">
+															<input type="radio" name="g6d" autocomplete="off" checked=""
+																value="6">&nbsp;&nbsp;Sabado&nbsp;&nbsp;</label>
+														<label class="btn btn-primary">
+															<input type="radio" name="g6d" autocomplete="off"
+																value="">Apagado</label>
+													</div>
+												</fieldset>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-4 my-1">
+												<fieldset id="g7d">
+													<div class="btn-group btn-group-toggle" data-toggle="buttons">
+														<label class="btn btn-primary active">
+															<input type="radio" name="g7d" autocomplete="off" checked=""
+																value="0">Domingo</label>
+														<label class="btn btn-primary">
+															<input type="radio" name="g7d" autocomplete="off"
+																value="">Apagado</label>
+													</div>
+												</fieldset>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="tabtwo" role="tabpanel">
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group"> <label class="my-1">Fecha Inicio</label> <input
+														type="date" id="sdate" class="form-control"
+														placeholder="Enter email" name="sdate" required
+														min="2019-01-01"></div>
+												<div class="form-group"> <label class="my-1">Fecha Fin</label> <input
+														type="date" id="edate" class="form-control"
+														placeholder="Password" name="edate" required disabled> </div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group"> <label class="my-1">Hora Inicio</label><select
+														class="form-control" id="stime" name="stime" required>
+														<option value="">--:--</option>
+														<option id="s0">00:00</option>
+														<option id="s1">01:00</option>
+														<option id="s2">02:00</option>
+														<option id="s3">03:00</option>
+														<option id="s4">04:00</option>
+														<option id="s5">05:00</option>
+														<option id="s6">06:00</option>
+														<option id="s7">07:00</option>
+														<option id="s8">08:00</option>
+														<option id="s9">09:00</option>
+														<option id="s10">10:00</option>
+														<option id="s11">11:00</option>
+														<option id="s12">12:00</option>
+														<option id="s13">13:00</option>
+														<option id="s14">14:00</option>
+														<option id="s15">15:00</option>
+														<option id="s16">16:00</option>
+														<option id="s17">17:00</option>
+														<option id="s18">18:00</option>
+														<option id="s19">19:00</option>
+														<option id="s20">20:00</option>
+														<option id="s21">21:00</option>
+														<option id="s22">22:00</option>
+														<option id="s23">23:00</option>
+													</select></div>
+												<div class="form-group"> <label class="my-1">Hora Fin</label><select
+														class="form-control" id="etime" name="etime" required>
+														<option value="">--:--</option>
+														<option id="e0" value="00:00" disabled>01:00</option>
+														<option id="e1" value="01:00" disabled>02:00</option>
+														<option id="e2" value="02:00" disabled>03:00</option>
+														<option id="e3" value="03:00" disabled>04:00</option>
+														<option id="e4" value="04:00" disabled>05:00</option>
+														<option id="e5" value="05:00" disabled>06:00</option>
+														<option id="e6" value="06:00" disabled>07:00</option>
+														<option id="e7" value="07:00" disabled>08:00</option>
+														<option id="e8" value="08:00" disabled>09:00</option>
+														<option id="e9" value="09:00" disabled>10:00</option>
+														<option id="e10" value="10:00" disabled>11:00</option>
+														<option id="e11" value="11:00" disabled>12:00</option>
+														<option id="e12" value="12:00" disabled>13:00</option>
+														<option id="e13" value="13:00" disabled>14:00</option>
+														<option id="e14" value="14:00" disabled>15:00</option>
+														<option id="e15" value="15:00" disabled>16:00</option>
+														<option id="e16" value="16:00" disabled>17:00</option>
+														<option id="e17" value="17:00" disabled>18:00</option>
+														<option id="e18" value="18:00" disabled>19:00</option>
+														<option id="e19" value="19:00" disabled>20:00</option>
+														<option id="e20" value="20:00" disabled>21:00</option>
+														<option id="e21" value="21:00" disabled>22:00</option>
+														<option id="e22" value="22:00" disabled>23:00</option>
+														<option id="e23" value="23:00" disabled>24:00</option>
+													</select></div>
+											</div>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="tabthree" role="tabpanel">
+										<div class="row">
+											<fieldset id="g1t">
+												<div class="btn-group btn-group-toggle btn-group-lg my-3"
+													data-toggle="buttons">
+													<label class="btn btn-primary active">
+														<input type="radio" name="g1t" autocomplete="off" checked=""
+															value="speed">Velocidad</label>
+													<label class="btn btn-primary">
+														<input type="radio" name="g1t" autocomplete="off"
+															value="report">Reportes</label>
+													<label class="btn btn-primary">
+														<input type="radio" name="g1t" autocomplete="off"
+															value="JAM">Trafico</label>
+													<label class="btn btn-primary">
+														<input type="radio" name="g1t" autocomplete="off"
+															value="POLICE">Policia</label>
+													<label class="btn btn-primary">
+														<input type="radio" name="g1t" autocomplete="off"
+															value="CHIT_CHAT">Chit-Chat</label>
+													<label class="btn btn-primary">
+														<input type="radio" name="g1t" autocomplete="off"
+															value="HAZARD">Obstaculo</label>
+													<label class="btn btn-primary">
+														<input type="radio" name="g1t" autocomplete="off"
+															value="ROAD_CLOSED">Camino Cerrado</label>
+													<label class="btn btn-primary">
+														<input type="radio" name="g1t" autocomplete="off"
+															value="ACCIDENT">Accidente</label>
+												</div>
+											</fieldset>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+					<div class="row">
+						<div class="col-md-12 my-2"><button id="btn" class="btn btn-secondary">Enviar Consulta</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row justify-content-center" style="background-color:#404040;">
+		<div class="col-md-5 p-3 text-center"><canvas id="myChart" width="400" height="400"></canvas></div>
+	</div>
+	<!-- Footer -->
+	<% include partials/_footer %>
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="../views/bundle/plot_bundle_all.js"></script>
+	<script>
+
+		$(document).ready(function () {
+			var ciudad = <%- JSON.stringify(jcity) %>;
+			$('#hp').val(ciudad.city);
+
+
+		<% if (typeof arrwaze !== 'undefined') { %>
+			var result = <%- JSON.stringify(arrwaze) %>;
+				lbl = 'Velocidad Promedio KMH';
+				for (let i = 0; i < result.length; i++) {
+					days.push(formatoDia(result[i].day));
+					var vel = 0;
+					for (let j = 0; j < result[i].data.length; j++) {
+						var vel = vel + result[i].data[j];
+					}
+					datos.push((vel / result[i].data.length));
+				}
+		<% } %>
+		<% if (typeof repwaze !== 'undefined') { %>
+			var result = <%- JSON.stringify(repwaze) %>;
+				lbl = 'Número de reportes';
+				for (let i = 0; i < result.length; i++) {
+					console.log(result[i].date.length);
+					days.push(formatoDia(result[i].day));
+					var rep = 0;
+					console.log(formatoDia(result[i].day));
+					for (let j = 0; j < result[i].data.length; j++) {
+						//console.log(rep+" + "+result[i].data[j]);
+						var rep = rep + result[i].data[j];
+					}
+					console.log(rep)
+					datos.push((rep / 1));
+				}
+		<% } %>
+
+		<% include javascript_ejs/plot_dayFormat.js %>
+		<% include javascript_ejs/plot_validate.js %>
+	});
+	</script>
+	<% include partials/_footRes %>
+</body>
