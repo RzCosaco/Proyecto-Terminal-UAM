@@ -4,6 +4,7 @@ module.exports = io => {
             const model = require('../models/' + city);
             const datos = require('../resources/json/alcaldias.json');
             const ray = require('../resources/functions/rayCasting.js');
+            var spawn = require("child_process").spawn;
             const alertas = ["POLICE", "HAZARD", "JAM", "CHIT_CHAT", "ACCIDENT", "ROAD_CLOSED"];
             if (alertas.includes(type)) {
                 for (let i = 0; i < data.length; i++) {
@@ -19,24 +20,14 @@ module.exports = io => {
                         exec(function (err, response) {
                             if (err) return handleError(err);
                             if (response.length > 0) {
-                                let resjson = {
-                                    "Alvaro Obregon": 0,
-                                    "Azcapotzalco": 0,
-                                    "Benito Juárez": 0,
-                                    "Coyoacan": 0,
-                                    "Cuajimalpa": 0,
-                                    "Cuauhtemoc": 0,
-                                    "Gustavo A. Madero": 0,
-                                    "Iztacalco": 0,
-                                    "Iztapalapa": 0,
-                                    "La Magdalena Contreras": 0,
-                                    "Miguel Hidalgo": 0,
-                                    "Milpa Alta": 0,
-                                    "Tlahuac": 0,
-                                    "Tlalpan": 0,
-                                    "Venustiano Carranza": 0,
-                                    "Xochimilco": 0
-                                }
+                                var resjson = { "Alvaro Obregon": 0, "Azcapotzalco": 0, "Benito Juarez": 0, "Coyoacan": 0, "Cuajimalpa": 0, "Cuauhtemoc": 0, "Gustavo A. Madero": 0, "Iztacalco": 0, "Iztapalapa": 0,"La Magdalena Contreras": 0,"Miguel Hidalgo": 0,"Milpa Alta": 0,"Tlahuac": 0,"Tlalpan": 0,"Venustiano Carranza": 0,"Xochimilco": 0, "No Found": 0 };
+                                var process = spawn("java", ["-jar", 'D:\\Rodrigo\\Documents\\GitHub\\Node-Map\\src\\sockets\\test.jar', JSON.stringify(response), JSON.stringify(resjson)]);
+                                process.stdout.on('data', function(data) { 
+                                    console.log(data.toString()); 
+                                }); 
+                                process.stderr.on("data", function (data) {
+                                    console.log(data.toString());
+                                });
                                 datos.alcaldias.forEach(alcaldia => {
                                     response.forEach(element => {
                                         let check = [element.c[0].x, element.c[0].y]
@@ -45,6 +36,7 @@ module.exports = io => {
                                         }
                                     });
                                 });
+                                console.log(resjson);
                                 socket.emit('ploting_mun', resjson);
                             }
                         });
