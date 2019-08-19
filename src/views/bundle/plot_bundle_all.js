@@ -16,17 +16,18 @@ function draw(lbls, chartDatos, lbl) {
             datasets: [{
                 label: lbl,
                 data: chartDatos,
-                backgroundColor: [],
+                backgroundColor: '#003399',
                 borderColor: 'rgb(0, 0, 0)',
-                borderWidth: 1
+                borderWidth: 0.5
             }]
         },
         options: {
             legend: {
                 labels: {
                     fontColor: "white",
-                    fontSize: 18
-                }
+                    fontSize: 13,
+                },
+                position: 'bottom'
             },
             scales: {
                 yAxes: [{
@@ -36,24 +37,31 @@ function draw(lbls, chartDatos, lbl) {
                     }
                 }],
                 xAxes: [{
+                    categoryPercentage: 1.0,
+                    barPercentage: 1.0,
                     ticks: {
                         fontColor: "white",
-                        beginAtZero: true
+                        beginAtZero: true,
+                        autoSkip: false,
+                        padding: 10
                     }
                 }]
+            },
+            plugins: {
+                datalabels: {
+                    anchor: 'center',
+                    align: 'center',
+                    color: 'white',
+                    rotation: 270,
+                    font: {
+                        weight: 'bold',
+                        size: 14
+                    }
+                }
             }
         }
     });
     return myChart;
-}
-
-function getRandomColor() {
-    let letters = '0123456789ABCDEF'.split('');
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
 }
 
 let myChart = draw(lbls, chartDatos, lbl);
@@ -80,7 +88,6 @@ $('#btn').click(function () {
         const stime = $('#stime').val();
         const etime = $('#etime').val();
         const g1t = $("input[name='g1t']:checked").val();
-        const g2t = $("input[name='g2t']:checked").val();
         const start = moment(sdate);
         const end = moment(edate);
         const ci = $('#hp').val();
@@ -117,11 +124,8 @@ $('#btn').click(function () {
             }
             parray.push([auxarray, darray[i][1]]);
         }
-        if ((parray.length === 1 || days.length === 1) && g2t === 'day') {
+        if (parray.length === 1 || days.length === 1) {
             lbls = ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"];
-            for (let i = 0; i < lbls.length; i++) {
-                myChart.data.datasets[0].backgroundColor.push(getRandomColor());
-            }
             let numDias = 0;
             parray.forEach(element => {
                 numDias += element[0].length;
@@ -145,122 +149,122 @@ $('#btn').click(function () {
                     case '00:00':
                         cuantos[0] = cuantos[0] + 1;
                         total[0] = total[0] + resjson[0].count;
-                        myChart.data.datasets[0].data[0] = total[0] / cuantos[0];
+                        myChart.data.datasets[0].data[0] = Math.round((total[0] / cuantos[0]) * 100) / 100;
                         break;
                     case '01:00':
                         cuantos[1] = cuantos[1] + 1;
                         total[1] = total[1] + resjson[0].count;
-                        myChart.data.datasets[0].data[1] = total[1] / cuantos[1];
+                        myChart.data.datasets[0].data[1] = Math.round((total[1] / cuantos[1]) * 100) / 100;
                         break;
                     case '02:00':
                         cuantos[2] = cuantos[2] + 1;
                         total[2] = total[2] + resjson[0].count;
-                        myChart.data.datasets[0].data[2] = total[2] / cuantos[2];
+                        myChart.data.datasets[0].data[2] = Math.round((total[2] / cuantos[2]) * 100) / 100;
                         break;
                     case '03:00':
                         cuantos[3] = cuantos[3] + 1;
                         total[3] = total[3] + resjson[0].count;
-                        myChart.data.datasets[0].data[3] = total[3] / cuantos[3];
+                        myChart.data.datasets[0].data[3] = Math.round((total[3] / cuantos[3]) * 100) / 100;
                         break;
                     case '04:00':
                         cuantos[4] = cuantos[4] + 1;
                         total[4] = total[4] + resjson[0].count;
-                        myChart.data.datasets[0].data[4] = total[4] / cuantos[4];
+                        myChart.data.datasets[0].data[4] = Math.round((total[4] / cuantos[4]) * 100) / 100;
                         break;
                     case '05:00':
                         cuantos[5] = cuantos[5] + 1;
                         total[5] = total[5] + resjson[0].count;
-                        myChart.data.datasets[0].data[5] = total[5] / cuantos[5];
+                        myChart.data.datasets[0].data[5] = Math.round((total[5] / cuantos[5]) * 100) / 100;
                         break;
                     case '06:00':
                         cuantos[6] = cuantos[6] + 1;
                         total[6] = total[6] + resjson[0].count;
-                        myChart.data.datasets[0].data[6] = total[6] / cuantos[6];
+                        myChart.data.datasets[0].data[6] = Math.round((total[6] / cuantos[6]) * 100) / 100;
                         break;
                     case '07:00':
                         cuantos[7] = cuantos[7] + 1;
                         total[7] = total[7] + resjson[0].count;
-                        myChart.data.datasets[0].data[7] = total[7] / cuantos[7];
+                        myChart.data.datasets[0].data[7] = Math.round((total[7] / cuantos[7]) * 100) / 100;
                         break;
                     case '08:00':
                         cuantos[8] = cuantos[8] + 1;
                         total[8] = total[8] + resjson[0].count;
-                        myChart.data.datasets[0].data[8] = total[8] / cuantos[8];
+                        myChart.data.datasets[0].data[8] = Math.round((total[8] / cuantos[8]) * 100) / 100;
                         break;
                     case '09:00':
                         cuantos[9] = cuantos[9] + 1;
                         total[9] = total[9] + resjson[0].count;
-                        myChart.data.datasets[0].data[9] = total[9] / cuantos[9];
+                        myChart.data.datasets[0].data[9] = Math.round((total[9] / cuantos[9]) * 100) / 100;
                         break;
                     case '10:00':
                         cuantos[10] = cuantos[10] + 1;
                         total[10] = total[10] + resjson[0].count;
-                        myChart.data.datasets[0].data[10] = total[10] / cuantos[10];
+                        myChart.data.datasets[0].data[10] = Math.round((total[10] / cuantos[10]) * 100) / 100;
                         break;
                     case '11:00':
                         cuantos[11] = cuantos[11] + 1;
                         total[11] = total[11] + resjson[0].count;
-                        myChart.data.datasets[0].data[11] = total[11] / cuantos[11];
+                        myChart.data.datasets[0].data[11] = Math.round((total[11] / cuantos[11]) * 100) / 100;
                         break;
                     case '12:00':
                         cuantos[12] = cuantos[12] + 1;
                         total[12] = total[12] + resjson[0].count;
-                        myChart.data.datasets[0].data[12] = total[12] / cuantos[12];
+                        myChart.data.datasets[0].data[12] = Math.round((total[12] / cuantos[12]) * 100) / 100;
                         break;
                     case '13:00':
                         cuantos[13] = cuantos[13] + 1;
                         total[13] = total[13] + resjson[0].count;
-                        myChart.data.datasets[0].data[13] = total[13] / cuantos[13];
+                        myChart.data.datasets[0].data[13] = Math.round((total[13] / cuantos[13]) * 100) / 100;
                         break;
                     case '14:00':
                         cuantos[14] = cuantos[14] + 1;
                         total[14] = total[14] + resjson[0].count;
-                        myChart.data.datasets[0].data[14] = total[14] / cuantos[14];
+                        myChart.data.datasets[0].data[14] = Math.round((total[14] / cuantos[14]) * 100) / 100;
                         break;
                     case '15:00':
                         cuantos[15] = cuantos[15] + 1;
                         total[15] = total[15] + resjson[0].count;
-                        myChart.data.datasets[0].data[15] = total[15] / cuantos[15];
+                        myChart.data.datasets[0].data[15] = Math.round((total[15] / cuantos[15]) * 100) / 100;
                         break;
                     case '16:00':
                         cuantos[16] = cuantos[16] + 1;
                         total[16] = total[16] + resjson[0].count;
-                        myChart.data.datasets[0].data[16] = total[16] / cuantos[16];
+                        myChart.data.datasets[0].data[16] = Math.round((total[16] / cuantos[16]) * 100) / 100;
                         break;
                     case '17:00':
                         cuantos[17] = cuantos[17] + 1;
                         total[17] = total[17] + resjson[0].count;
-                        myChart.data.datasets[0].data[17] = total[17] / cuantos[17];
+                        myChart.data.datasets[0].data[17] = Math.round((total[17] / cuantos[17]) * 100) / 100;
                         break;
                     case '18:00':
                         cuantos[18] = cuantos[18] + 1;
                         total[18] = total[18] + resjson[0].count;
-                        myChart.data.datasets[0].data[18] = total[18] / cuantos[18];
+                        myChart.data.datasets[0].data[18] = Math.round((total[18] / cuantos[18]) * 100) / 100;
                         break;
                     case '19:00':
                         cuantos[19] = cuantos[19] + 1;
                         total[19] = total[19] + resjson[0].count;
-                        myChart.data.datasets[0].data[19] = total[19] / cuantos[19];
+                        myChart.data.datasets[0].data[19] = Math.round((total[19] / cuantos[19]) * 100) / 100;
                         break;
                     case '20:00':
                         cuantos[20] = cuantos[20] + 1;
                         total[20] = total[20] + resjson[0].count;
-                        myChart.data.datasets[0].data[20] = total[20] / cuantos[20];
+                        myChart.data.datasets[0].data[20] = Math.round((total[20] / cuantos[20]) * 100) / 100;
                         break;
                     case '21:00':
                         cuantos[21] = cuantos[21] + 1;
                         total[21] = total[21] + resjson[0].count;
-                        myChart.data.datasets[0].data[21] = total[21] / cuantos[21];
+                        myChart.data.datasets[0].data[21] = Math.round((total[21] / cuantos[21]) * 100) / 100;
                         break;
                     case '22:00':
                         cuantos[22] = cuantos[22] + 1;
                         total[22] = total[22] + resjson[0].count;
-                        myChart.data.datasets[0].data[22] = total[22] / cuantos[22];
+                        myChart.data.datasets[0].data[22] = Math.round((total[22] / cuantos[22]) * 100) / 100;
                         break;
                     case '23:00':
                         cuantos[23] = cuantos[23] + 1;
                         total[23] = total[23] + resjson[0].count;
-                        myChart.data.datasets[0].data[23] = total[23] / cuantos[23];
+                        myChart.data.datasets[0].data[23] = Math.round((total[23] / cuantos[23]) * 100) / 100;
                         break;
                 }
                 if (cont === numDias) {
@@ -276,9 +280,6 @@ $('#btn').click(function () {
             cuantos = [0, 0, 0, 0, 0, 0, 0];
             total = [0, 0, 0, 0, 0, 0, 0];
             lbls = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
-            for (let i = 0; i < lbls.length; i++) {
-                myChart.data.datasets[0].backgroundColor.push(getRandomColor());
-            }
             myChart.data.labels = lbls;
             myChart.data.datasets[0].label = ("Promedio de " + g1t + " del " + sdate + " al " + edate + " de " + stime + "hrs a las " + etime + "hrs");
             myChart.data.datasets[0].data = [0, 0, 0, 0, 0, 0, 0];
@@ -293,37 +294,37 @@ $('#btn').click(function () {
                     case 0:
                         cuantos[0] = cuantos[0] + 1;
                         total[0] = total[0] + resjson[0].count;
-                        myChart.data.datasets[0].data[0] = total[0] / cuantos[0];
+                        myChart.data.datasets[0].data[0] = Math.round((total[0] / cuantos[0]) * 100) / 100;
                         break;
                     case 1:
                         cuantos[1] = cuantos[1] + 1;
                         total[1] = total[1] + resjson[0].count;
-                        myChart.data.datasets[0].data[1] = total[1] / cuantos[1];
+                        myChart.data.datasets[0].data[1] = Math.round((total[1] / cuantos[1]) * 100) / 100;
                         break;
                     case 2:
                         cuantos[2] = cuantos[2] + 1;
                         total[2] = total[2] + resjson[0].count;
-                        myChart.data.datasets[0].data[2] = total[2] / cuantos[2];
+                        myChart.data.datasets[0].data[2] = Math.round((total[2] / cuantos[2]) * 100) / 100;
                         break;
                     case 3:
                         cuantos[3] = cuantos[3] + 1;
                         total[3] = total[3] + resjson[0].count;
-                        myChart.data.datasets[0].data[3] = total[3] / cuantos[3];
+                        myChart.data.datasets[0].data[3] = Math.round((total[3] / cuantos[3]) * 100) / 100;
                         break;
                     case 4:
                         cuantos[4] = cuantos[4] + 1;
                         total[4] = total[4] + resjson[0].count;
-                        myChart.data.datasets[0].data[4] = total[4] / cuantos[4];
+                        myChart.data.datasets[0].data[4] = Math.round((total[4] / cuantos[4]) * 100) / 100;
                         break;
                     case 5:
                         cuantos[5] = cuantos[5] + 1;
                         total[5] = total[5] + resjson[0].count;
-                        myChart.data.datasets[0].data[5] = total[5] / cuantos[5];
+                        myChart.data.datasets[0].data[5] = Math.round((total[5] / cuantos[5]) * 100) / 100;
                         break;
                     case 6:
                         cuantos[6] = cuantos[6] + 1;
                         total[6] = total[6] + resjson[0].count;
-                        myChart.data.datasets[0].data[6] = total[6] / cuantos[6];
+                        myChart.data.datasets[0].data[6] = Math.round((total[6] / cuantos[6]) * 100) / 100;
                         break;
                 }
                 if (cont === parray.length) {
