@@ -6,7 +6,7 @@ const socketIO = require('socket.io');
 const app = express();
 
 //connecting to db
-mongoose.connect('mongodb://localhost/wazeproyecto', {useNewUrlParser: true})
+mongoose.connect('mongodb://localhost/waze', {useNewUrlParser: true})
 .then(db => console.log('DB conectada'))
 .catch(err => console.log(err));
 

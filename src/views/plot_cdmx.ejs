@@ -243,11 +243,11 @@
 											<div class="col-md-8 my-1">
 												<fieldset id="g2t">
 													<div class="btn-group btn-group-toggle" data-toggle="buttons">
-														<label class="btn btn-primary active">
-															<input type="radio" name="g2t" autocomplete="off" checked=""
+														<label id="ldias" class="btn btn-primary active">
+															<input type="radio" id="dias" name="g2t" autocomplete="off" checked=""
 																value="day">Dias</label>
-														<label class="btn btn-primary">
-															<input type="radio" name="g2t" autocomplete="off"
+														<label id="lalcas" class="btn btn-primary">
+															<input type="radio" id="alcas" name="g2t" autocomplete="off"
 																value="mun">Alcaldias</label>
 													</div>
 												</fieldset>
@@ -279,8 +279,22 @@
 		$(document).ready(function () {
 			var ciudad = <%- JSON.stringify(jcity) %>;
 			$('#hp').val(ciudad.city);
+			$('#g2t').hide();
 
 			<% include javascript_ejs/plot_validate.js %>
+
+			$('input[type=radio][name=g1t]').change(function(){
+				if($(this).val() === 'speed' || $(this).val() === 'report'){
+					$('#dias').prop("checked", true);
+					$('#lalcas').removeClass("active");
+					$('#ldias').removeClass("active");
+					$('#ldias').addClass("active");
+					$('#g2t').hide();
+				}
+				else{
+					$('#g2t').show();
+				}
+			});
 	});
 	</script>
 	<% include partials/_footRes %>
