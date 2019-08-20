@@ -30,7 +30,7 @@
           var city = <%- JSON.stringify(jcity) %>;
           $('#tabladate').empty();
           for (var i = 0; i < result.length; i++) {
-            $("#tabladate").append($("<tr><th scope='row'>" + (i + 1) + "</th><td>" + result[i].startTime.substring(0, 16) + "</td><td><a href='/clustered/" + city.city + "&" + result[i]._id + "'>Clustered</a></td><td><a href='/masked/" + city.city + "&" + result[i]._id + "'>Masked</a></td></tr>"));
+            $("#tabladate").append($("<tr><th scope='row'>" + (i + 1) + "</th><td>" + result[i].tiempo.substring(0, 16) + "</td><td><a href='/clustered/" + city.city + "&" + result[i]._id + "'>Clustered</a></td><td><a href='/masked/" + city.city + "&" + result[i]._id + "'>Masked</a></td></tr>"));
           }
         <% } %>
       }

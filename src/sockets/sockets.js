@@ -74,7 +74,7 @@ module.exports = io => {
                         });
                 }
             }
-            if (type === 'speed') {
+            if (type === 'Velocidad') {
                 for (let i = 0; i < data.length; i++) {
                     let re = new RegExp(data[i][0].join("|"));
                     await model.aggregate([
@@ -93,7 +93,7 @@ module.exports = io => {
                         });
                 }
             }
-            if(type === 'report'){
+            if(type === 'Reportes'){
                 for (let i = 0; i < data.length; i++) {
                     let re = new RegExp(data[i][0].join("|"));
                     await model.aggregate([
@@ -138,7 +138,7 @@ module.exports = io => {
                     });
                 }
             }
-            if (type === 'speed') {
+            if (type === 'Velocidad') {
                 for (let i = 0; i < data.length; i++) {
                     data[i][0].forEach(element => {
                         model.aggregate([
@@ -159,7 +159,7 @@ module.exports = io => {
                     });
                 }
             }
-            if (type === 'report'){
+            if (type === 'Reportes'){
                 for (let i = 0; i < data.length; i++) {
                     data[i][0].forEach(element => {
                         model.aggregate([

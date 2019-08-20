@@ -216,10 +216,10 @@
 													data-toggle="buttons">
 													<label class="btn btn-primary active">
 														<input type="radio" name="g1t" autocomplete="off" checked=""
-															value="speed">Velocidad</label>
+															value="Velocidad">Velocidad</label>
 													<label class="btn btn-primary">
 														<input type="radio" name="g1t" autocomplete="off"
-															value="report">Reportes</label>
+															value="Reportes">Reportes</label>
 													<label class="btn btn-primary">
 														<input type="radio" name="g1t" autocomplete="off"
 															value="JAM">Trafico</label>
@@ -286,7 +286,7 @@
 			<% include javascript_ejs/plot_validate.js %>
 
 			$('input[type=radio][name=g1t]').change(function(){
-				if($(this).val() === 'speed' || $(this).val() === 'report'){
+				if($(this).val() === 'Velocidad' || $(this).val() === 'Reportes'){
 					$('#dias').prop("checked", true);
 					$('#lalcas').removeClass("active");
 					$('#ldias').removeClass("active");

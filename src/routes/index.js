@@ -47,8 +47,7 @@ router.get('/searchDate/:city', async (req, res) => {
     const obj = req.query;
     const date = obj[Object.keys(obj)[0]];
     const model = require('../models/' + city);
-    const tdate = await model.find({ 'startTime': { $regex: date } }, { 'startTime': 1, _id: 1 });
-    //const tdate = await model.find({ 'startTime': { $regex: date } }, { 'alerts.uuid':1,'startTime':1,'jams.uuid': 1, _id: 1 });
+    const tdate = await model.find({ 'tiempo': { $regex: date } }, { 'tiempo': 1, _id: 1 });
     res.render('map', {
         tdate,
         jcity
@@ -79,34 +78,4 @@ router.get('/masked/:city&:id', async (req, res) => {
     });
 })
 
-function combine(arr) {
-    var combined = arr.reduce(function (result, item) {
-        var current = result[item.day];
-        result[item.day] = !current ? item : {
-            day: item.day,
-            date: current.date.concat(item.date),
-            data: current.data.concat(item.data)
-        };
-        return result;
-    }, {});
-    return Object.keys(combined).map(function (key) {
-        return combined[key];
-    });
-}
-
-function combineA(arr) {
-    var combined = arr.reduce(function (result, item) {
-        var current = result[item.day];
-        var aux = [];
-        result[item.day] = !current ? item : {
-            day: item.day,
-            date: current.date.concat(item.date),
-            data: current.data + item.data
-        };
-        return result;
-    }, {});
-    return Object.keys(combined).map(function (key) {
-        return combined[key];
-    });
-}
 module.exports = router;
