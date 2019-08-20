@@ -372,82 +372,82 @@ $('#btn').click(function () {
                             case "Alvaro Obregon":
                                 count[0] = count[0] + 1;
                                 total[0] = total[0] + resjson[x];
-                                myChart.data.datasets[0].data[0] = total[0] / count[0];
+                                myChart.data.datasets[0].data[0] = Math.round((total[0] / count[0])*100)/100;
                                 break;
                             case "Azcapotzalco":
                                 count[1] = count[1] + 1;
                                 total[1] = total[1] + resjson[x];
-                                myChart.data.datasets[0].data[1] = total[1] / count[1];
+                                myChart.data.datasets[0].data[1] = Math.round((total[1] / count[1])*100)/100;
                                 break;
                             case "Benito Juárez":
                                 count[2] = count[2] + 1;
                                 total[2] = total[2] + resjson[x];
-                                myChart.data.datasets[0].data[2] = total[2] / count[2];
+                                myChart.data.datasets[0].data[2] = Math.round((total[2] / count[2])*100)/100;
                                 break;
                             case "Coyoacan":
                                 count[3] = count[3] + 1;
                                 total[3] = total[3] + resjson[x];
-                                myChart.data.datasets[0].data[3] = total[3] / count[3];
+                                myChart.data.datasets[0].data[3] = Math.round((total[3] / count[3])*100)/100;
                                 break;
                             case "Cuajimalpa":
                                 count[4] = count[4] + 1;
                                 total[4] = total[4] + resjson[x];
-                                myChart.data.datasets[0].data[4] = total[4] / count[4];
+                                myChart.data.datasets[0].data[4] = Math.round((total[4] / count[4])*100)/100;
                                 break;
                             case "Cuauhtemoc":
                                 count[5] = count[5] + 1;
                                 total[5] = total[5] + resjson[x];
-                                myChart.data.datasets[0].data[5] = total[5] / count[5];
+                                myChart.data.datasets[0].data[5] = Math.round((total[5] / count[5])*100)/100;
                                 break;
                             case "Gustavo A. Madero":
                                 count[6] = count[6] + 1;
                                 total[6] = total[6] + resjson[x];
-                                myChart.data.datasets[0].data[6] = total[6] / count[6];
+                                myChart.data.datasets[0].data[6] = Math.round((total[6] / count[6])*100)/100;
                                 break;
                             case "Iztacalco":
                                 count[7] = count[7] + 1;
                                 total[7] = total[7] + resjson[x];
-                                myChart.data.datasets[0].data[7] = total[7] / count[7];
+                                myChart.data.datasets[0].data[7] = Math.round((total[7] / count[7])*100)/100;
                                 break;
                             case "Iztapalapa":
                                 count[8] = count[8] + 1;
                                 total[8] = total[8] + resjson[x];
-                                myChart.data.datasets[0].data[8] = total[8] / count[8];
+                                myChart.data.datasets[0].data[8] = Math.round((total[8] / count[8])*100)/100;
                                 break;
                             case "La Magdalena Contreras":
                                 count[9] = count[9] + 1;
                                 total[9] = total[9] + resjson[x];
-                                myChart.data.datasets[0].data[9] = total[9] / count[9];
+                                myChart.data.datasets[0].data[9] = Math.round((total[9] / count[9])*100)/100;
                                 break;
                             case "Miguel Hidalgo":
                                 count[10] = count[10] + 1;
                                 total[10] = total[10] + resjson[x];
-                                myChart.data.datasets[0].data[10] = total[10] / count[10];
+                                myChart.data.datasets[0].data[10] = Math.round((total[10] / count[10])*100)/100;
                                 break;
                             case "Milpa Alta":
                                 count[11] = count[11] + 1;
                                 total[11] = total[11] + resjson[x];
-                                myChart.data.datasets[0].data[11] = total[11] / count[11];
+                                myChart.data.datasets[0].data[11] = Math.round((total[11] / count[11])*100)/100;
                                 break;
                             case "Tlahuac":
                                 count[12] = count[12] + 1;
                                 total[12] = total[12] + resjson[x];
-                                myChart.data.datasets[0].data[12] = total[12] / count[12];
+                                myChart.data.datasets[0].data[12] = Math.round((total[12] / count[12])*100)/100;
                                 break;
                             case "Tlalpan":
                                 count[13] = count[13] + 1;
                                 total[13] = total[13] + resjson[x];
-                                myChart.data.datasets[0].data[13] = total[13] / count[13];
+                                myChart.data.datasets[0].data[13] = Math.round((total[13] / count[13])*100)/100;
                                 break;
                             case "Venustiano Carranza":
                                 count[14] = count[14] + 1;
                                 total[14] = total[14] + resjson[x];
-                                myChart.data.datasets[0].data[14] = total[14] / count[14];
+                                myChart.data.datasets[0].data[14] = Math.round((total[14] / count[14])*100)/100;
                                 break;
                             case "Xochimilco":
                                 count[15] = count[15] + 1;
                                 total[15] = total[15] + resjson[x];
-                                myChart.data.datasets[0].data[15] = total[15] / count[15];
+                                myChart.data.datasets[0].data[15] = Math.round((total[15] / count[15])*100)/100;
                                 break;
                         }
                     }
