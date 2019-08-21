@@ -81,6 +81,7 @@ $('#btn').click(function () {
         const edate = $('#edate').val();
         const stime = $('#stime').val();
         const etime = $('#etime').val();
+        const setime = $('#etime :selected').text();
         const g1t = $("input[name='g1t']:checked").val();
         const start = moment(sdate);
         const end = moment(edate);
@@ -130,7 +131,7 @@ $('#btn').click(function () {
             cuantos = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
             total = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
             myChart.data.labels = lbls;
-            myChart.data.datasets[0].label = ("Promedio de " + g1t + " del " + sdate + " al " + edate + " de " + stime + "hrs a las " + etime + "hrs");
+            myChart.data.datasets[0].label = ("Promedio de " + g1t + " en " + ci.toUpperCase() + " del " + sdate + " al " + edate + " de " + stime + " a " + setime);
             myChart.data.datasets[0].data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
             myChart.update();
             socket.emit('ploting_oneDay', parray, ci, g1t)
@@ -275,7 +276,7 @@ $('#btn').click(function () {
             total = [0, 0, 0, 0, 0, 0, 0];
             lbls = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
             myChart.data.labels = lbls;
-            myChart.data.datasets[0].label = ("Promedio de " + g1t + " del " + sdate + " al " + edate + " de " + stime + "hrs a las " + etime + "hrs");
+            myChart.data.datasets[0].label = ("Promedio de " + g1t + " en " + ci.toUpperCase() + " del " + sdate + " al " + edate + " de " + stime + " a " + setime);
             myChart.data.datasets[0].data = [0, 0, 0, 0, 0, 0, 0];
             myChart.update();
             socket.emit('ploting_day', parray, ci, g1t)

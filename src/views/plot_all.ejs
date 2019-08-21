@@ -18,10 +18,11 @@
 			<div class="row">
 				<div class="text-center mx-auto col-md-12">
 					<h1>Graficar datos<br></h1>
+					<h1 class="display-5 mb-4" id="date"></h1>
 					<p hidden value="" id="hp"></p>
 					<a href="/#cities" class="btn btn-lg btn-primary mx-1">Regresar a Ciudades<br></a> <a
 						class="btn btn-lg mx-1 btn-outline-light" href="/busqueda/<%= jcity.city %>">Regresar a
-						Búsqueda<br></a>
+						Selección<br></a>
 				</div>
 			</div>
 			<div class="row">
@@ -266,6 +267,7 @@
 
 		$(document).ready(function () {
 			var ciudad = <%- JSON.stringify(jcity) %>;
+			$('#date').text(ciudad.city.toUpperCase());
 			$('#hp').val(ciudad.city);
 
 			<% include javascript_ejs/plot_validate.js %>

@@ -46,9 +46,12 @@
     style="background-image: linear-gradient(to bottom, rgba(0, 0, 0, .75), rgba(0, 0, 0, .75)), url(https://static.pingendo.com/cover-bubble-dark.svg);  background-position: center center, center center;  background-size: cover, cover;  background-repeat: repeat, repeat;">
     <div class="container py-5">
       <div class="row">
+	<div class="col-md-12">
+          <h1 class="display-3"><%= jcity.city.toUpperCase() %></h1>
+        </div>
         <div class="text-center mx-auto col-md-12">
           <a href="/#cities" class="btn btn-lg btn-primary mx-1">Regresar a Ciudades<br></a> <a
-            class="btn btn-lg mx-1 btn-outline-light" href="/busqueda/<%= jcity.city %>">Regresar a Búsqueda<br></a>
+            class="btn btn-lg mx-1 btn-outline-light" href="/busqueda/<%= jcity.city %>">Regresar a Selección<br></a>
         </div>
       </div>
       <div class="row">

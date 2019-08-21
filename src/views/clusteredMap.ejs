@@ -60,7 +60,7 @@
             var data = [];
 
             var result = <%- JSON.stringify(arrwaze) %>;
-            $('#date').text(result.startTime.substring(0, 16));
+            $('#date').text(ciudad.city.toUpperCase()+" "+result.tiempo.substring(0, 16));
             for (var i = 0; i < result.jams.length; i++) {
                 var trafico = result.jams[i];
                 var linea = trafico.line;
