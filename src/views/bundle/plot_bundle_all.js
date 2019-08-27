@@ -41,24 +41,25 @@ function draw(lbls, chartDatos, lbl) {
                     barPercentage: 1.0,
                     ticks: {
                         fontColor: "white",
+                        fontSize: 16,
                         beginAtZero: true,
                         autoSkip: false,
-                        padding: 10
+                        padding:15
                     }
                 }]
             },
             plugins: {
                 datalabels: {
-                    anchor: 'center',
-                    align: 'center',
-                    color: 'white',
-                    rotation: 270,
-                    font: {
-                        weight: 'bold',
-                        size: 14
-                    }
+                  anchor: 'center',
+                  align: 'center',
+                  color: 'white',
+                  rotation: 270,
+                  font: {
+                    weight: 'bold',
+                    size: 20
+                  }
                 }
-            }
+              }
         }
     });
     return myChart;

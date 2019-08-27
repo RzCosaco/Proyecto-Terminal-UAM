@@ -35,9 +35,10 @@ function draw(lbls, chartDatos, lbl) {
                     barPercentage: 1.0,
                     ticks: {
                         fontColor: "white",
+                        fontSize: 16,
                         beginAtZero: true,
                         autoSkip: false,
-                        padding:10
+                        padding:15
                     }
                 }]
             },
@@ -49,7 +50,7 @@ function draw(lbls, chartDatos, lbl) {
                   rotation: 270,
                   font: {
                     weight: 'bold',
-                    size: 14
+                    size: 20
                   }
                 }
               }
