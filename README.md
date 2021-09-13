@@ -1,4 +1,5 @@
-# Node-Map
+# Proyecto Terminal UAM
+
 ----------MongoDB----------
 La base de datos que se usa para la página web en el servidor de palancar es mongodb
 Se debe iniciar el servicio de "mongod" para poder accder al shell de mongo y asi activar la base de datos:
